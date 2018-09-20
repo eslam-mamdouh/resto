@@ -3,7 +3,7 @@
 define("HOST" , "localhost");
 define("USER" , "root");
 define("PASS" , "");
-define("DB_NAME" , "todo");
+define("DB_NAME" , "resto");
 
 class DB{
 

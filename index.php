@@ -1,9 +1,20 @@
+<?php
+   spl_autoload_register(function($class){
+    include "classes/".$class.".php";
+});
+  session_start();
+
+  $slides = slide::all();
+  $specialties = special::all();
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>uiCookies:Resto &mdash; Free Bootstrap Theme, Free Restaurant Responsive Bootstrap Website Template</title>
+    <title>Resto &mdash; </title>
     <meta name="description" content="Free Bootstrap Theme by uicookies.com">
     <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
     
@@ -47,46 +58,23 @@
 
     <section class="flexslider" data-section="welcome">
       <ul class="slides">
-        <li style="background-image: url(img/hero_bg_1.jpg)" class="overlay" data-stellar-background-ratio="0.5">
+        <?php
+          foreach ($slides as $slide) {
+        ?>
+        <li style="background-image: url(<?php echo "img/" .$slide->image_url; ?>)" class="overlay" data-stellar-background-ratio="0.5">
           <div class="container">
             <div class="row">
               <div class="col-md-8 col-md-offset-2">
                 <div class="probootstrap-slider-text text-center probootstrap-animate probootstrap-heading">
-                  <h1 class="primary-heading">Welcome</h1>
-                  <h3 class="secondary-heading">The Resto</h3>
-                  <p class="sub-heading">A free bootstrap website template by <a href="https://uicookies.com">uicookies.com</a></p>
+                  <h1 class="primary-heading"><?php echo $slide->head1; ?></h1>
+                  <h3 class="secondary-heading"><?php echo $slide->head2; ?></h3>
+                  <p class="sub-heading"><?php echo $slide->head3; ?></p>
                 </div>
               </div>
             </div>
           </div>
         </li>
-        <li style="background-image: url(img/hero_bg_2.jpg)" class="overlay">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2">
-                <div class="probootstrap-slider-text text-center probootstrap-animate probootstrap-heading">
-                  <h1 class="primary-heading">Dine</h1>
-                  <h3 class="secondary-heading">With Us</h3>
-                  <p class="sub-heading">A free bootstrap website template by <a href="https://uicookies.com">uicookies.com</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-        </li>
-        <li style="background-image: url(img/hero_bg_3.jpg)" class="overlay">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2">
-                <div class="probootstrap-slider-text text-center probootstrap-animate probootstrap-heading">
-                  <h1 class="primary-heading">Enjoy</h1>
-                  <h3 class="secondary-heading">With Us</h3>
-                  <p class="sub-heading">A free bootstrap website template by <a href="https://uicookies.com">uicookies.com</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
+          <?php } ?>
       </ul>
     </section>
 
@@ -127,62 +115,25 @@
       <div class="container">
         <div class="row">
           <div class="probootstrap-cell-retro">
-            <div class="half">
 
-              <div class="probootstrap-cell probootstrap-animate" data-animate-effect="fadeIn">
-                <div class="image" style="background-image: url(img/img_square_1.jpg);"></div>
-                <div class="text text-center">
-                  <h3>Baked Potato Pizza</h3>
-                  <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam.</p>
-                  <p class="price">$20.99</p>
-                </div>
-              </div>
-              <div class="probootstrap-cell reverse probootstrap-animate" data-animate-effect="fadeIn">
-                <div class="image" style="background-image: url(img/img_square_2.jpg);"></div>
-                <div class="text text-center">
-                  <h3>Salted Fried Chicken</h3>
-                  <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam.</p>
-                  <p class="price">$19.99</p>
-                </div>
-              </div>
-              <div class="probootstrap-cell probootstrap-animate" data-animate-effect="fadeIn">
-                <div class="image" style="background-image: url(img/img_square_3.jpg);"></div>
-                <div class="text text-center">
-                  <h3>Imported Salmon Steak</h3>
-                  <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam.</p>
-                  <p class="price">$20.99</p>
-                </div>
-              </div>
 
+            <?php
+              foreach ($specialties as $special) {
+            ?>
+              <div class="half">
+              <div class="probootstrap-cell probootstrap-animate" data-animate-effect="fadeIn">
+                <div class="image" style="background-image: url(<?php echo "img/". $special->image_url; ?>);"></div>
+                <div class="text text-center">
+                  <h3><?php echo $special->title; ?></h3>
+                  <p><?php echo $special->description; ?></p>
+                  <p class="price">$<?php echo $special->price; ?></p>
+                </div>
+              </div>
             </div>
-            <div class="half">
-
-              <div class="probootstrap-cell probootstrap-animate" data-animate-effect="fadeIn">
-                <div class="image" style="background-image: url(img/img_square_4.jpg);"></div>
-                <div class="text text-center">
-                  <h3>Roast Beef (4 sticks)</h3>
-                  <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam.</p>
-                  <p class="price">$32.99</p>
-                </div>
-              </div>
-              <div class="probootstrap-cell reverse probootstrap-animate" data-animate-effect="fadeIn">
-                <div class="image" style="background-image: url(img/img_square_5.jpg);"></div>
-                <div class="text text-center">
-                  <h3>Tuna Roast Source</h3>
-                  <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam.</p>
-                  <p class="price">$25.99</p>
-                </div>
-              </div>
-              <div class="probootstrap-cell probootstrap-animate" data-animate-effect="fadeIn">
-                <div class="image" style="background-image: url(img/img_square_1.jpg);"></div>
-                <div class="text text-center">
-                  <h3>Fried Potatoes with Garlic</h3>
-                  <p>Laboriosam pariatur modi praesentium deleniti molestiae officiis atque numquam.</p>
-                  <p class="price">$32.99</p>
-                </div>
-              </div>
               
-            </div>
+              <?php } ?>
+              
+
           </div>
         </div>
       </div>
