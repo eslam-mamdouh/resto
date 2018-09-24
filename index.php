@@ -4,9 +4,10 @@
 });
   session_start();
 
-  $slides = slide::all();
+  $slides      = slide::all();
   $specialties = special::all();
-  
+  $menus       = menu::all();  
+  $events      =event::all();
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +49,13 @@
             <li class="active"><a href="#" data-nav-section="welcome">Welcome</a></li>
             <li><a href="#" data-nav-section="specialties">Specialties</a></li>
             <li><a href="#" data-nav-section="menu">Menu</a></li>
-            <li><a href="#" data-nav-section="reservation">Reservation</a></li>
+            <li><a href="#" id="re" data-nav-section="reservation">Reservation</a></li>
             <li><a href="#" data-nav-section="events">Events</a></li>
             <li><a href="#" data-nav-section="contact">Contact</a></li>
+            <li><a href="#" data-nav-section="contact"></a></li>
+            <li><a href="#" data-nav-section="contact"></a></li>
+            <li><a href="form.php">resigtertion </a></li>
+            <!-- <li><a href="form.php"  data-nav-section="resigster">signin</a></li> -->
           </ul>
         </div>
       </div>
@@ -126,7 +131,7 @@
                 <div class="text text-center">
                   <h3><?php echo $special->title; ?></h3>
                   <p><?php echo $special->description; ?></p>
-                  <p class="price">$<?php echo $special->price; ?></p>
+                  <p class="price"><?php echo $special->price; ?></p>
                 </div>
               </div>
             </div>
@@ -155,78 +160,22 @@
     <section class="probootstrap-section probootstrap-bg-white">
       <div class="container">
         <div class="row">
+              <?php
+                foreach ($menus as $menu) {             
+              ?>
           <div class="col-md-6">
             <ul class="menus">
               <li>
-                <figure class="image"><img src="img/img_square_1.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
+                <figure class="image"><img src="<?php echo"img/".$menu->image_url;?>" alt="Free Bootstrap Template by uicookies.com"></figure>
                 <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Fried Potatoes with Garlic</h3>
-                  <p>Crab / Potatoes / Rice</p>
-                </div>
-              </li>
-              <li>
-                <figure class="image"><img src="img/img_square_2.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-                <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Tuna Roast Source</h3>
-                  <p>Crab / Potatoes / Rice</p>
-                </div>
-              </li>
-              <li>
-                <figure class="image"><img src="img/img_square_3.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-                <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Roast Beef (4 sticks)</h3>
-                  <p>Crab / Potatoes / Rice</p>
-                </div>
-              </li>
-              <li>
-                <figure class="image"><img src="img/img_square_4.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-                <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Salted Fried Chicken</h3>
-                  <p>Crab / Potatoes / Rice</p>
+                  <span class="price"><?php echo"$menu->price";?></span>
+                  <h3><?php echo"$menu->title";?></h3>
+                  <p><?php echo"$menu->component";?></p>
                 </div>
               </li>
             </ul>
           </div>
-          <div class="col-md-6">
-            <ul class="menus">
-              <li>
-                <figure class="image"><img src="img/img_square_5.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-                <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Baked Potato Pizza</h3>
-                  <p>Crab / Potatoes / Rice</p>
-                </div>
-              </li>
-              <li>
-                <figure class="image"><img src="img/img_square_1.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-                <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Fried Potatoes with Garlic</h3>
-                  <p>Crab / Potatoes / Rice</p>
-                </div>
-              </li>
-              <li>
-                <figure class="image"><img src="img/img_square_2.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-                <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Salted Fried Chicken</h3>
-                  <p>Crab / Potatoes / Rice</p>
-                </div>
-              </li>
-              <li>
-                <figure class="image"><img src="img/img_square_3.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-                <div class="text">
-                  <span class="price">$22.99</span>
-                  <h3>Tuna Roast Source</h3>
-                  <p>Crab / Potatoes / Rice</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+            <?php } ?>
         </div>
       </div>
     </section>
@@ -246,20 +195,28 @@
 
     <section class="probootstrap-section probootstrap-bg-white">
       <div class="container">
+        <?php 
+          if(isset($_SESSION['serv_added']))
+            {
+
+            echo '<h3 class="alert alert-success" style="text-align: center;">your reservation is created</h3>';
+            }
+        ?>
         <div class="row">
-          <div class="col-md-12 probootstrap-animate">
-            <form method="post" class="probootstrap-form">
+        <br><br>
+        <div class="col-md-12 probootstrap-animate">
+            <form method="post" action="process.php" class="probootstrap-form">
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="people">How Many People</label>
                     <div class="form-field">
                       <i class="icon icon-chevron-down"></i>
-                      <select name="people" id="people" class="form-control">
-                        <option value="#">1 people</option>
-                        <option value="#">2 people</option>
-                        <option value="#">3 people</option>
-                        <option value="#">4+ people</option>
+                      <select type="int" name="people" id="people" class="form-control">
+                        <option value="1">1 people</option>
+                        <option value="2">2 people</option>
+                        <option value="3">3 people</option>
+                        <option value="4">4+ people</option>
                       </select>
                     </div>
                   </div>
@@ -269,7 +226,7 @@
                     <label for="date">Date</label>
                     <div class="form-field">
                       <i class="icon icon-calendar"></i>
-                      <input type="text" id="date" class="form-control">
+                      <input type="date" id="date" name="date" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -278,7 +235,7 @@
                     <label for="time">Time</label>
                     <div class="form-field">
                       <i class="icon icon-clock"></i>
-                      <input type="text" id="time" class="form-control">
+                      <input type="text" id="time" name="time" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -290,7 +247,7 @@
                     <label for="name">Name</label>
                     <div class="form-field">
                       <i class="icon icon-user2"></i>
-                      <input type="text" id="name" class="form-control" placeholder="Your full name">
+                      <input type="text" id="name" name="name" class="form-control" placeholder="Your full name">
                     </div>
                   </div>
                 </div>
@@ -299,7 +256,7 @@
                     <label for="email">Email</label>
                     <div class="form-field">
                       <i class="icon icon-mail"></i>
-                      <input type="text" id="email" class="form-control" placeholder="Your email address">
+                      <input type="text" id="email" name="email" class="form-control" placeholder="Your email address">
                     </div>
                   </div>
                 </div>
@@ -308,7 +265,7 @@
                     <label for="phone">Phone</label>
                     <div class="form-field">
                       <i class="icon icon-phone"></i>
-                      <input type="text" id="phone" class="form-control" placeholder="Your phone">
+                      <input type="text" id="phone" name="phone" class="form-control" placeholder="Your phone">
                     </div>
                   </div>
                 </div>
@@ -340,39 +297,23 @@
     <section class="probootstrap-section">
       <div class="container">
         <div class="row">
+        <?php foreach ($events as $event){
+          # code...
+        ?>
           <div class="col-md-4 col-sm-4 probootstrap-animate">
             <div class="probootstrap-block-image">
-              <figure><img src="img/img_square_2.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
+              <figure><img src="<?php echo "img/".$event->image_url;?>" alt="Free Bootstrap Template by uicookies.com"></figure>
               <div class="text">
-                <span class="date">June 29, 2017</span>
-                <h3><a href="#">Laboriosam Quod Dignissimos</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
+                <span class="date"><?php echo $event->date;  ?></span>
+                <h3><a href="#"><?php echo $event->title;  ?></a></h3>
+                <p><?php echo $event->description;  ?></p>
                 <p class=""><a href="#" class="probootstrap-custom-link link-sm">Read More</a></p>
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-sm-4 probootstrap-animate">
-            <div class="probootstrap-block-image">
-              <figure><img src="img/img_square_3.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-              <div class="text">
-                <span class="date">June 29, 2017</span>
-                <h3><a href="#">Laboriosam Quod Dignissimos</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
-                <p class=""><a href="#" class="probootstrap-custom-link link-sm">Read More</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-4 probootstrap-animate">
-            <div class="probootstrap-block-image">
-              <figure><img src="img/img_square_4.jpg" alt="Free Bootstrap Template by uicookies.com"></figure>
-              <div class="text">
-                <span class="date">June 29, 2017</span>
-                <h3><a href="#">Laboriosam Quod Dignissimos</a></h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto provident qui tempore natus quos quibusdam soluta at.</p>
-                <p class=""><a href="#" class="probootstrap-custom-link link-sm">Read More</a></p>
-              </div>
-            </div>
-          </div>
+        <?php } ?>
+        
+         
         </div>
       </div>
     </section>
@@ -470,6 +411,10 @@
 
     <script src="js/scripts.min.js"></script>
     <script src="js/custom.min.js"></script>
+    <?php 
+      // unset($_SESSION["serv_added"]);
+      session_destroy();
+    ?>
 
   </body>
 </html>

@@ -6,7 +6,7 @@
     include "header.php";
     session_start();
 
-    $menus = menu::all();
+    $reservations = reservation::all();
 
 ?>
         <!-- Left navbar-header end -->
@@ -27,8 +27,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <h3 class="box-title">menu Management</h3>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add menu</button>
+                            <h3 class="box-title">Reservation Management</h3>
+                            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"></button> -->
                             <br>
                             <br>
                             <?php
@@ -41,42 +41,50 @@
                                 <table class="table ">
                                     <thead>
                                         <tr>
-                                            <th>title</th>
-                                            <th>component</th>
-                                            <th>price</th>
-                                            <th>image_url</th>
-                                            <th>actions</th>
+                                            <th>people_nums</th>
+                                            <th>date</th>
+                                            <th>time</th>
+                                            <th>user_name</th>
+                                            <th>email</th>
+                                            <th>phone</th>
+                                            <th>created at</th>
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                            foreach ($menus as $menu) {
-                                            if(isset($menu))
+                                        <?php
+                                            foreach ($reservations as $reservation) {
+                                            if(isset($reservation))
                                             {
                                         ?>    
 
                                         <tr>
-                                            <td class="txt-oflo"><?php echo $menu->title; ?></td>
-                                            <td><?php echo $menu->component ;?></td>
-                                            <td class="txt-oflo"><?php echo $menu->price ;?></td>
-                                            <td><span class="text-success"><?php echo $menu->image_url;?></span></td>
-                                            <td><button value="<?php echo $menu->id ;?>" class="btn btn-success" style="margin-left:0 !important">Edit</button></td>
-                                            <td><a href="<?php echo "data_process.php?deletemenu=".$menu->id ;?>" value="<?php echo $slide->id ;?>"  class="btn btn-danger" style="margin:0 !important">delete</a></td>
+                                            <td class="txt-oflo"><?php echo $reservation->people_nums; ?></td>
+                                            <td><?php echo $reservation->date ;?></td>
+                                            <td class="txt-ofloreservation"><?php echo $reservation->time ;?></td>
+                                            <td class="txt-oflo"><?php echo $reservation->user_name ;?></td>
+                                            <td class="txt-oflo"><?php echo $reservation->email ;?></td>
+                                            <td class="txt-oflo"><?php echo $reservation->phone ;?></td>
+                                            <td class="txt-oflo"><?php echo $reservation->created_at ;?></td>
+
+                                         
+                                            <td><a href="<?php echo "data_process.php?deletereservation=".$reservation->id ;?>" value="<?php echo $slide->id ;?>"  class="btn btn-danger" style="margin:0 !important">Cancel reservation</a></td>
                                         </tr>
                                         <?php }} ?>
-                                      
+                                        
                                     </tbody>
                                 </table> <a href="#"></a> </div>
                         
                         </div>
 
 
-                        <!-- Modal -->
+                        <!-- Modal
                         <div id="myModal" class="modal fade" role="dialog">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
-                                <div class="modal-content">
+                                <!-- <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     <h4 class="modal-title">Add New Slide</h4>
@@ -84,41 +92,38 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- form start -->
-                            <form role="form" action="data_process.php" method="POST" id="slide_form" enctype="multipart/form-data">
+                    <!-- <form role="form" action="data_process.php" method="POST" id="slide_form" enctype="multipart/form-data">
                             <div class="box-body">
-                            <div class="form-group">
-                                <label>Title</label>
-                                <input class="form-control" name="title" placeholder="Enter title" type="text">
+                                <div class="form-group">
+                                <label>Head 1</label>
+                                <input class="form-control" name="head1" placeholder="Enter Head 1" type="text">
                                 </div>
                                 <div class="form-group">
-                                <label>component</label>
-                                <input class="form-control" name="component" placeholder="Enter component" type="text">
+                                <label>Head 2</label>
+                                <input class="form-control" name="head2" placeholder="Enter Head 2" type="text">
                                 </div>
                                 <div class="form-group">
-                                <label>price</label>
-                                <input class="form-control" name="price" placeholder="Enter price" type="text">
+                                <label>Head 3</label>
+                                <input class="form-control" name="head3" placeholder="Enter Head 3" type="text">
                                 </div>
-                                
                                 <div class="form-group">
                                 <label for="exampleInputFile">Choose Image</label>
                                 <input id="exampleInputFile" name="image" type="file">
 
                                 </div>
                             
-                                
-                            
                             </div>
                             <!-- /.box-body -->
 
-                            <div class="box-footer">
-                                <button type="submit"  name="add_menu"  class="btn btn-primary">Add</button>
+                            <!-- <div class="box-footer">
+                                <button type="submit"  name="add_slide"  class="btn btn-primary">Add</button>
                             </div>
-                            </form>
-                                </div>
+                    </form> --> 
+                                <!-- </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
-                                </div>
+                                </div> -->
 
 
                     </div>
@@ -130,6 +135,5 @@
             <?php
                 // unset($_SESSION["slide_added"]);
                 // session_destroy();
-               
                 include "footer.php";
             ?>

@@ -32,9 +32,9 @@
                             <br>
                             <br>
                             <?php
-                                if(isset($_SESSION["slide_added"])){
-                                    echo "<div class='alert alert-success'>Slide Added Successfuly!</div>";
-                                }
+                                // if(isset($_SESSION["slide_added"])){
+                                //     echo "<div class='alert alert-success'>Slide Added Successfuly!</div>";
+                                // }
                             ?>
                             <br>
                             <div class="table-responsive">
@@ -51,17 +51,20 @@
                                     <tbody>
                                         <?php
                                             foreach ($slides as $slide) {
+                                            if(isset($slide))
+                                            {
                                         ?>    
-                                        
+
                                         <tr>
                                             <td class="txt-oflo"><?php echo $slide->head1; ?></td>
                                             <td><?php echo $slide->head2 ;?></td>
                                             <td class="txt-oflo"><?php echo $slide->head3 ;?></td>
                                             <td><span class="text-success"><?php echo $slide->image_url;?></span></td>
                                             <td><button value="<?php echo $slide->id ;?>" class="btn btn-success" style="margin-left:0 !important">Edit</button></td>
-                                            <td><button value="<?php echo $slide->id ;?>" class="btn btn-danger" style="margin:0 !important">delete</button></td>
+                                            <td><a href="<?php echo "data_process.php?deleteslide=".$slide->id ;?>" value="<?php echo $slide->id ;?>"  class="btn btn-danger" style="margin:0 !important">delete</a></td>
                                         </tr>
-                                        <?php } ?>
+                                        <?php }} ?>
+                                        
                                     </tbody>
                                 </table> <a href="#">Check all the sales</a> </div>
                         
@@ -81,7 +84,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- form start -->
-                            <form role="form" action="data_process.php" method="POST" id="slide_form" enctype="multipart/form-data">
+                    <form role="form" action="data_process.php" method="POST" id="slide_form" enctype="multipart/form-data">
                             <div class="box-body">
                                 <div class="form-group">
                                 <label>Head 1</label>
@@ -107,7 +110,7 @@
                             <div class="box-footer">
                                 <button type="submit"  name="add_slide"  class="btn btn-primary">Add</button>
                             </div>
-                            </form>
+                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -122,7 +125,7 @@
 
 
             <?php
-                unset($_SESSION["slide_added"]);
-                session_destroy();
+                // unset($_SESSION["slide_added"]);
+                // session_destroy();
                 include "footer.php";
             ?>

@@ -6,7 +6,7 @@
     include "header.php";
     session_start();
 
-    $menus = menu::all();
+    $users = user::all();
 
 ?>
         <!-- Left navbar-header end -->
@@ -27,8 +27,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <h3 class="box-title">menu Management</h3>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add menu</button>
+                            <h3 class="box-title">users Management</h3>
+                            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add Slide</button> -->
                             <br>
                             <br>
                             <?php
@@ -41,32 +41,33 @@
                                 <table class="table ">
                                     <thead>
                                         <tr>
-                                            <th>title</th>
-                                            <th>component</th>
-                                            <th>price</th>
-                                            <th>image_url</th>
+                                            <th>fname</th>
+                                            <th>lname</th>
+                                            <th>email</th>
+                                            <th>pass</th>
                                             <th>actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                            foreach ($menus as $menu) {
-                                            if(isset($menu))
+                                        <?php
+                                            foreach ($users as $user) {
+                                            if(isset($user))
                                             {
                                         ?>    
 
                                         <tr>
-                                            <td class="txt-oflo"><?php echo $menu->title; ?></td>
-                                            <td><?php echo $menu->component ;?></td>
-                                            <td class="txt-oflo"><?php echo $menu->price ;?></td>
-                                            <td><span class="text-success"><?php echo $menu->image_url;?></span></td>
-                                            <td><button value="<?php echo $menu->id ;?>" class="btn btn-success" style="margin-left:0 !important">Edit</button></td>
-                                            <td><a href="<?php echo "data_process.php?deletemenu=".$menu->id ;?>" value="<?php echo $slide->id ;?>"  class="btn btn-danger" style="margin:0 !important">delete</a></td>
+                                            <td class="txt-oflo"><?php echo $user->fname; ?></td>
+                                            <td><?php echo $user->lname ;?></td>
+                                            <td class="txt-oflo"><?php echo $user->email ;?></td>
+                                            <td class="txt-oflo"><?php echo $user->password ;?></td>
+                                            <td><span class="text-success"><?php echo $user->image_url;?></span></td>
+                                            <td><button value="<?php echo $user->id ;?>" class="btn btn-success" style="margin-left:0 !important">Edit</button></td>
+                                            <td><a href="<?php echo "data_process.php?deleteuser=".$user->id ;?>" value="<?php echo $slide->id ;?>"  class="btn btn-danger" style="margin:0 !important">delete</a></td>
                                         </tr>
                                         <?php }} ?>
-                                      
+                                        
                                     </tbody>
-                                </table> <a href="#"></a> </div>
+                                </table> <a href="#">Check all the sales</a> </div>
                         
                         </div>
 
@@ -84,36 +85,33 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- form start -->
-                            <form role="form" action="data_process.php" method="POST" id="slide_form" enctype="multipart/form-data">
+                    <form role="form" action="data_process.php" method="POST" id="slide_form" enctype="multipart/form-data">
                             <div class="box-body">
-                            <div class="form-group">
-                                <label>Title</label>
-                                <input class="form-control" name="title" placeholder="Enter title" type="text">
+                                <div class="form-group">
+                                <label>Head 1</label>
+                                <input class="form-control" name="head1" placeholder="Enter Head 1" type="text">
                                 </div>
                                 <div class="form-group">
-                                <label>component</label>
-                                <input class="form-control" name="component" placeholder="Enter component" type="text">
+                                <label>Head 2</label>
+                                <input class="form-control" name="head2" placeholder="Enter Head 2" type="text">
                                 </div>
                                 <div class="form-group">
-                                <label>price</label>
-                                <input class="form-control" name="price" placeholder="Enter price" type="text">
+                                <label>Head 3</label>
+                                <input class="form-control" name="head3" placeholder="Enter Head 3" type="text">
                                 </div>
-                                
                                 <div class="form-group">
                                 <label for="exampleInputFile">Choose Image</label>
                                 <input id="exampleInputFile" name="image" type="file">
 
                                 </div>
                             
-                                
-                            
                             </div>
                             <!-- /.box-body -->
 
                             <div class="box-footer">
-                                <button type="submit"  name="add_menu"  class="btn btn-primary">Add</button>
+                                <button type="submit"  name="add_slide"  class="btn btn-primary">Add</button>
                             </div>
-                            </form>
+                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -130,6 +128,5 @@
             <?php
                 // unset($_SESSION["slide_added"]);
                 // session_destroy();
-               
                 include "footer.php";
             ?>

@@ -28,7 +28,7 @@ $specialties = special::all();
                 <div class="col-md-12">
                     <div class="white-box">
                         <h3 class="box-title">Specialties Management</h3>
-                        <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add Slide</button>
+                        <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add special</button>
                             <br>
                             <br>
                             <div class="table-responsive">
@@ -45,6 +45,9 @@ $specialties = special::all();
                                     <tbody>
                                         <?php
                                             foreach ($specialties as $special) {
+                                            if(isset($special))
+                                            {
+
                                         ?>    
                                         
                                         <tr>
@@ -53,9 +56,10 @@ $specialties = special::all();
                                             <td class="txt-oflo"><?php echo $special->price ;?></td>
                                             <td><span class="text-success"><?php echo $special->image_url;?></span></td>
                                             <td><button value="<?php echo $special->id ;?>" class="btn btn-success" style="margin-left:0 !important">Edit</button></td>
-                                            <td><button value="<?php echo $special->id ;?>" class="btn btn-danger" style="margin:0 !important">delete</button></td>
+                                            <td><a href="<?php echo"data_process.php?deletespec=".$special->id ;?>" value="<?php echo $special->id ;?>" class="btn btn-danger" style="margin:0 !important">delete</button></td>
                                         </tr>
-                                        <?php } ?>
+                                        <?php }} ?>
+                                            
                                     </tbody>
                                 </table> <a href="#">Check all the sales</a> </div>
                         
