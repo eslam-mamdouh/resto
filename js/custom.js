@@ -176,7 +176,10 @@
 
 			if ( st > 5 ) {
 				jQuery('.probootstrap-navbar').addClass('scrolled');
+				jQuery('.right-side').addClass('new');
+				
 			} else {
+				jQuery('.right-side').removeClass('new');
 				jQuery('.probootstrap-navbar').removeClass('scrolled');
 			}
 

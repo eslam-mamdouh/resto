@@ -3,11 +3,11 @@
     include "classes/".$class.".php";
 });
   session_start();
-
+  $user = user::where("id" , $_SESSION["user_id"]);
   $slides      = slide::all();
   $specialties = special::all();
   $menus       = menu::all();  
-  $events      =event::all();
+  $events      = event::all();
 ?>
 
 <!DOCTYPE html>
@@ -27,10 +27,46 @@
       <script src="js/vendor/html5shiv.min.js"></script>
       <script src="js/vendor/respond.min.js"></script>
     <![endif]-->
+  <style>
+    .user-info{
+      position :fixed;
+      width:100%;
+      padding:15px;
+      background :#FFF;
+    }
+
+    .navbar-collapse{
+      float:left !important;
+      margin-left:100px !important;
+    }
+    .right-side{
+      float:right;
+      margin-top:0px !important;
+      position: absolute;
+      right: 10px;
+      top: 50px;
+    }
+    .new{
+      top:25px !important;
+    }
+    .right-side a{
+      margin-right:10px;
+      color: #FFF !important ;
+      font-weight:bold;
+    }
+    .right-side a:last-child{
+      font-weight: 200;
+      background: #FFA33E;
+      padding: 7px;
+      border-radius: 5px;
+    }
+  
+  </style>
   </head>
   <body>
     
     <!-- Fixed navbar -->
+
     
     <nav class="navbar navbar-default navbar-fixed-top probootstrap-navbar">
       <div class="container">
@@ -54,11 +90,25 @@
             <li><a href="#" data-nav-section="contact">Contact</a></li>
             <li><a href="#" data-nav-section="contact"></a></li>
             <li><a href="#" data-nav-section="contact"></a></li>
-            <li><a href="form.php">resigtertion </a></li>
             <!-- <li><a href="form.php"  data-nav-section="resigster">signin</a></li> -->
           </ul>
         </div>
       </div>
+          <div class="right-side pull-right">
+          <?php
+                  if(isset($_SESSION["user_id"])){
+              ?>
+                <a href="#"><?php echo $user->fname ." ".$user->lname; ?></a>
+                <?php 
+                  if($user->role == "admin"){
+                  ?>
+                    <a href="admin/index.php" style="pointer-events:all !important"> Dashboard </a>
+                  <?php }?>
+                  <?php }else{
+                    ?>
+                    <a href="form.php">resigtertion </a>
+                  <?php } ?>
+          </div>
     </nav>
 
     <section class="flexslider" data-section="welcome">
@@ -195,24 +245,21 @@
 
     <section class="probootstrap-section probootstrap-bg-white">
       <div class="container">
-        <?php 
-          if(isset($_SESSION['serv_added']))
-            {
-
-            echo '<h3 class="alert alert-success" style="text-align: center;">your reservation is created</h3>';
-            }
-        ?>
+      
+        
+          <p id="res_err" class="alert alert-success" style="text-align: center; display:none">your reservation is created</p>
+     
         <div class="row">
         <br><br>
         <div class="col-md-12 probootstrap-animate">
-            <form method="post" action="process.php" class="probootstrap-form">
+            <form id="reservation" class="probootstrap-form">
               <div class="row">
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="people">How Many People</label>
                     <div class="form-field">
                       <i class="icon icon-chevron-down"></i>
-                      <select type="int" name="people" id="people" class="form-control">
+                      <select type="int" name="people" id="people" class="form-control" required>
                         <option value="1">1 people</option>
                         <option value="2">2 people</option>
                         <option value="3">3 people</option>
@@ -226,8 +273,9 @@
                     <label for="date">Date</label>
                     <div class="form-field">
                       <i class="icon icon-calendar"></i>
-                      <input type="date" id="date" name="date" class="form-control">
+                      <input type="date" name="date" class="form-control" required>
                     </div>
+                    <label id="date" style="color:red;display:none">date field is required.</label>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -235,7 +283,7 @@
                     <label for="time">Time</label>
                     <div class="form-field">
                       <i class="icon icon-clock"></i>
-                      <input type="text" id="time" name="time" class="form-control">
+                      <input type="text" id="time" name="time" class="form-control" required>
                     </div>
                   </div>
                 </div>
@@ -247,8 +295,9 @@
                     <label for="name">Name</label>
                     <div class="form-field">
                       <i class="icon icon-user2"></i>
-                      <input type="text" id="name" name="name" class="form-control" placeholder="Your full name">
+                      <input type="text" name="name" class="form-control" placeholder="Your full name" required>
                     </div>
+                    <label id="name" style="color:red;display:none">name field is required.</label>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -256,7 +305,7 @@
                     <label for="email">Email</label>
                     <div class="form-field">
                       <i class="icon icon-mail"></i>
-                      <input type="text" id="email" name="email" class="form-control" placeholder="Your email address">
+                      <input type="text" id="email" name="email" class="form-control" placeholder="Your email address" required>
                     </div>
                   </div>
                 </div>
@@ -265,14 +314,14 @@
                     <label for="phone">Phone</label>
                     <div class="form-field">
                       <i class="icon icon-phone"></i>
-                      <input type="text" id="phone" name="phone" class="form-control" placeholder="Your phone">
+                      <input type="text" id="phone" name="phone" class="form-control" placeholder="Your phone" required>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                  <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-lg btn-primary btn-block">
+                  <input name="submit" id="submit" value="Submit" class="btn btn-lg btn-primary btn-"block"";>
                 </div>
               </div>
               
@@ -411,10 +460,33 @@
 
     <script src="js/scripts.min.js"></script>
     <script src="js/custom.min.js"></script>
-    <?php 
-      // unset($_SESSION["serv_added"]);
-      session_destroy();
-    ?>
+
+    <script>
+      $(document).ready(function(){
+        $("#submit").click(function(e){
+          e.preventDefault();
+          $.ajax({
+            url:"process.php",
+            type:"post",
+            dataType:"json",
+            data :$("#reservation").serialize()
+          })
+          .done(function(res){
+            if(res == "done"){
+              $("#res_err").css("display" , "block");
+            }else{
+              // console.log(res.length);
+                for(var i=0 ; i< Object.keys(res).length ;i++){
+                  console.log(res);
+                  $("#"+res[i]).css("display" , "block");
+                }
+
+              
+            }
+          })
+        })
+      })
+    </script>
 
   </body>
 </html>

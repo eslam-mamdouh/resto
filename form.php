@@ -90,6 +90,12 @@ session_start();
                         <form id="signin" action="process.php" method="post">
                             <h3>Sign In to your account</h3>
                             <br><br>
+                            <?php
+                                if(isset($_SESSION["error"])){
+                                    unset($_SESSION["error"]);
+                                    ?>
+                                    <p class="alert alert-danger">Email or Password isn't valid</p>
+                                <?php } ?>
                                 <div class="input-group col-md-10 col-md-offset-1">
                                     <span class="input-group-addon">
                                         <i class="glyphicon glyphicon-envelope"></i>
@@ -107,6 +113,12 @@ session_start();
 
                         <form id="signup" style="display:none;" action="process.php" method="post" enctype="multipart/form-data">
                              <h3>Sign Up to your account</h3>
+                             <?php
+                                if(isset($_SESSION["email"])){
+                                    unset($_SESSION["email"]);
+                                    ?>
+                                    <p class="alert alert-danger">This Email already Exist!</p>
+                                <?php } ?>
                                 <div class="form-group col-md-12 ">
                                     <br>
                                     <div class="input-group"> 

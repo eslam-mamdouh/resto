@@ -28,7 +28,7 @@
                     <div class="col-md-12">
                         <div class="white-box">
                             <h3 class="box-title">users Management</h3>
-                            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add Slide</button> -->
+                            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add User</button>
                             <br>
                             <br>
                             <?php

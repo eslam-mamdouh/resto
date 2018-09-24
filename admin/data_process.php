@@ -49,10 +49,10 @@
 
     if(isset($_POST["add_menu"])){
         
-        $menu        = new menu;
-        $menu->title = $_POST["title"];
-        $menu->component = $_POST["component"];
-        $menu->price = $_POST["price"];
+        $menu             = new menu;
+        $menu->title      = $_POST["title"];
+        $menu->components = $_POST["component"];
+        $menu->price      = $_POST["price"];
 
         $path         = "../img/";
         $file         = time().$_FILES["image"]["name"];
@@ -164,4 +164,10 @@
         }
     }
     
+    if(isset($_GET["menu_id"])){
+
+        $o = menu::where("id" , $_GET["menu_id"]);
+        print_r(json_encode($o));
+
+    }
     ?>

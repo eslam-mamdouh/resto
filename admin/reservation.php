@@ -4,8 +4,6 @@
         include "../classes/".$class.".php";
     });
     include "header.php";
-    session_start();
-
     $reservations = reservation::all();
 
 ?>

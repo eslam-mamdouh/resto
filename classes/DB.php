@@ -61,6 +61,11 @@ class DB{
 
        return $data; 
     }
+
+    public function one($sql){
+        $res = $this->fetch($sql);
+        return $res[0];
+    }
     
     public function last_id(){
         return mysqli_insert_id($this->connect());

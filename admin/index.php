@@ -1,4 +1,15 @@
 <?php
+
+    session_start();
+    spl_autoload_register(function($class){
+        include "../classes/".$class.".php";
+    });
+    if(isset($_SESSION["user_id"])){
+        $user = user::where("id" , $_SESSION["user_id"]);
+        if($user->role != "admin"){
+            header("location: ../index.php");
+        }
+    }
     include "header.php";
 ?>
         <!-- Left navbar-header end -->

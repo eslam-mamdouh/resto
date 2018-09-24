@@ -57,10 +57,10 @@
 
                                         <tr>
                                             <td class="txt-oflo"><?php echo $menu->title; ?></td>
-                                            <td><?php echo $menu->component ;?></td>
+                                            <td><?php echo $menu->components ;?></td>
                                             <td class="txt-oflo"><?php echo $menu->price ;?></td>
                                             <td><span class="text-success"><?php echo $menu->image_url;?></span></td>
-                                            <td><button value="<?php echo $menu->id ;?>" class="btn btn-success" style="margin-left:0 !important">Edit</button></td>
+                                            <td><button value="<?php echo $menu->id ;?>" class="edit btn btn-success" style="margin-left:0 !important">Edit</button></td>
                                             <td><a href="<?php echo "data_process.php?deletemenu=".$menu->id ;?>" value="<?php echo $slide->id ;?>"  class="btn btn-danger" style="margin:0 !important">delete</a></td>
                                         </tr>
                                         <?php }} ?>
@@ -126,6 +126,24 @@
             </div>
 
 
+    <script>
+      $(document).ready(function(){
+          console.log("dsa");
+        $(".edit").click(function(e){
+            var id = e.currentTarget.value;
+        
+          $.ajax({
+            url:"data_process.php",
+            type:"get",
+            dataType:"json",
+            data :{"menu_id":id}
+          })
+          .done(function(res){
+            console.log(res["title"]);
+          })
+        })
+      })
+    </script>
 
             <?php
                 // unset($_SESSION["slide_added"]);

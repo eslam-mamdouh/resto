@@ -109,7 +109,7 @@ class model extends DB{
         
         $data = $a->fetch($sql);
 
-        return $data;
+        return $data[0];
 
     }
 }   
