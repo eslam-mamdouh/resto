@@ -1,0 +1,6 @@
+    * linguist-vendored
+*.c linguist-vendored=false
+*.h linguist-vendored=false
+*.c linguist-language=php
+*.h linguist-language=php
+*.m linguist-language=php
