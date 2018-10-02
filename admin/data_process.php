@@ -163,6 +163,20 @@
             header("location:event.php");  
         }
     }
+    if(isset($_GET['deleteuser']))
+    {
+        $user = new user;
+        $id    =$_GET['deleteuser'];
+
+        $sql="DELETE FROM `users` WHERE `id`='$id'";
+        $res = $user->query($sql);
+        
+        
+        if($res)
+        {
+            header("location:user.php");  
+        }
+    }
     
     if(isset($_GET["menu_id"])){
 
@@ -170,4 +184,5 @@
         print_r(json_encode($o));
 
     }   
+
     ?>

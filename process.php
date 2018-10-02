@@ -1,6 +1,6 @@
 <?php
 
-function validate($data){
+function validate($data){//to check if empty data or not 
     $error=[];
     foreach($data as $k => $v){
         if(empty($data[$k])){
@@ -17,11 +17,13 @@ spl_autoload_register(function($class)
     include "classes/".$class.".php";
 });
 
-    session_start();
+session_start();
+
+
 if(isset($_POST["submit"]))
 {
 
-    $err = validate($_POST);
+    $err = validate($_POST);// 
     if($err){
         print_r(json_encode($err));
         die();
@@ -36,11 +38,12 @@ if(isset($_POST["submit"]))
     $reservation->user_name  = $_POST["name"];
     $reservation->email      = $_POST["email"];
     $reservation->phone      = $_POST["phone"];
+    $reservation->created_at = date("m-d-y H:i:s" ,time());    
+
     if(isset($_SESSION["user_id"])){
 
         $reservation->user_id  = $_SESSION["user_id"];   
     }   
-    $reservation->created_at = date("m-d-y H:i:s" ,time());    
 
     if($reservation->save())
     {
@@ -54,10 +57,10 @@ if(isset($_POST["submit"]))
 if(isset($_POST["signup"]))
 {
     $user = user::where("email" , $_POST["email"]);
+
     if($user){
-        header("location: form.php");
         $_SESSION["email"]="Email already Exist";
-        exit();
+        header("location: form.php");
     }
 
 
@@ -79,8 +82,13 @@ if(isset($_POST["signup"]))
 
         if($user->save())
         {
-            $_SESSION['signup']="done";
+            // $_SESSION['signup']  = "done";
+            $_SESSION["user_id"]=$user->id;
             header("location: index.php");
+            
+        }
+        else{
+            header("location: form.php");
             
         }
     }
@@ -103,12 +111,13 @@ if(isset($_POST['login']))
         $_SESSION["user_id"]=$user->id;
         header("location: index.php");
 
-    }else{
+    }
+    else{
         $_SESSION["error"]="a";
         header("location: form.php");
         
     }
 
- 
 }
+
 

@@ -4,7 +4,29 @@
 });
 
   session_start();
+<<<<<<< HEAD
   $user        = user::where("id" , $_SESSION["user_id"]);
+=======
+
+  // echo $_SESSION["signup"];
+  // die();
+  
+  if(isset($_SESSION['signup']) && $_SESSION['signup']=="done" ){
+    $user = user::where("id" , $_SESSION["user_id"]);
+  }
+  if(isset($_SESSION["user_id"])){
+    $user = user::whereone("id" , $_SESSION["user_id"]);
+  }
+
+ 
+
+  if(isset($_GET["logout"])){
+    unset($_SESSION["user_id"]);
+  }
+
+  
+  
+>>>>>>> 244ae2ad4f031479a2eb1ff65f24bd812b6e9119
   $slides      = slide::all();
   $specialties = special::all();
   $menus       = menu::all();  
@@ -45,7 +67,8 @@
       margin-top:0px !important;
       position: absolute;
       right: 10px;
-      top: 50px;
+      top: 40px;
+      color:#000 !important;
     }
     .new{
       top:25px !important;
@@ -61,6 +84,11 @@
       padding: 7px;
       border-radius: 5px;
     }
+    .logout{
+      border:none;
+      border-radius:5px;
+      padding:5px;
+      }
   
   </style>
   </head>
@@ -100,15 +128,18 @@
                   if(isset($_SESSION["user_id"])){
               ?>
                 <a href="#"><?php echo $user->fname ." ".$user->lname; ?></a>
+                <a href="index.php?logout" id="logout" class="logout danger btn-danger">Logout</a>
                 <?php 
                   if($user->role == "admin"){
                   ?>
                     <a href="admin/index.php" style="pointer-events:all !important"> Dashboard </a>
                   <?php }?>
-                  <?php }else{
-                    ?>
+                  <?php }else{?>
                     <a href="form.php">resigtertion </a>
                   <?php } ?>
+
+            
+
           </div>
     </nav>
 
@@ -217,7 +248,7 @@
           <div class="col-md-6">
             <ul class="menus">
               <li>
-                <figure class="image"><img src="<?php echo"img/".$menu->image_url;?>" alt="Free Bootstrap Template by uicookies.com"></figure>
+                <figure style="width:120px" class="image"><img src="<?php echo"img/".$menu->image_url;?>" alt="Free Bootstrap Template by uicookies.com"></figure>
                 <div class="text">
                   <span class="price"><?php echo"$menu->price";?></span>
                   <h3><?php echo"$menu->title";?></h3>
@@ -248,7 +279,7 @@
       <div class="container">
       
         
-          <p id="res_err" class="alert alert-success" style="text-align: center; display:none">your reservation is created</p>
+          <p id="res_create" class="alert alert-success" style="text-align: center; display:none">your reservation is created</p>
      
         <div class="row">
         <br><br>
@@ -322,7 +353,7 @@
               </div>
               <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                  <input name="submit" id="submit" value="Submit" class="btn btn-lg btn-primary btn-"block"";>
+                  <input name="submit" id="submit" value="Submit" class="btn btn-lg btn-primary btn-">
                 </div>
               </div>
               
@@ -474,19 +505,19 @@
           })
           .done(function(res){
             if(res == "done"){
-              $("#res_err").css("display" , "block");
+              $("#res_create").css("display" , "block");
             }else{
               // console.log(res.length);
-                for(var i=0 ; i< Object.keys(res).length ;i++){
+                for(var i=0 ; i< Object.keys(res).length;i++){
                   console.log(res);
                   $("#"+res[i]).css("display" , "block");
                 }
-
-              
             }
           })
         })
       })
+
+
     </script>
 
   </body>

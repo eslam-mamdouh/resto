@@ -60,9 +60,9 @@
                                             <td><?php echo $user->lname ;?></td>
                                             <td class="txt-oflo"><?php echo $user->email ;?></td>
                                             <td class="txt-oflo"><?php echo $user->password ;?></td>
-                                            <td><span class="text-success"><?php echo $user->image_url;?></span></td>
+                                            <!-- <td><span class="text-success"><?php echo $user->image_url;?></span></td> -->
                                             <td><button value="<?php echo $user->id ;?>" class="btn btn-success" style="margin-left:0 !important">Edit</button></td>
-                                            <td><a href="<?php echo "data_process.php?deleteuser=".$user->id ;?>" value="<?php echo $slide->id ;?>"  class="btn btn-danger" style="margin:0 !important">delete</a></td>
+                                            <td><a href="<?php echo "data_process.php?deleteuser=".$user->id ;?>" value="<?php echo $user->id ;?>"  class="btn btn-danger" style="margin:0 !important">delete</a></td>
                                         </tr>
                                         <?php }} ?>
                                         
