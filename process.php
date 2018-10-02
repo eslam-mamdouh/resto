@@ -23,7 +23,7 @@ session_start();
 if(isset($_POST["submit"]))
 {
 
-    $err = validate($_POST);// 
+    $err = validate($_POST);
     if($err){
         print_r(json_encode($err));
         die();
@@ -47,7 +47,7 @@ if(isset($_POST["submit"]))
 
     if($reservation->save())
     {
-        echo "done";
+        print_r(json_encode(["msg"=>"done"]));
     }
 
 
@@ -64,7 +64,6 @@ if(isset($_POST["signup"]))
     }
 
 
-
     $user = new user;
     $user->fname=$_POST['fname'];
     $user->lname=$_POST['lname'];
@@ -79,11 +78,18 @@ if(isset($_POST["signup"]))
     if(move_uploaded_file($_FILES['image']['tmp_name'],$full_url))
     {
         $user->image_url=$full_url;
-
-        if($user->save())
+        $user_id = $user->save();
+        if($user_id)
         {
-            // $_SESSION['signup']  = "done";
-            $_SESSION["user_id"]=$user->id;
+            $body = '<h2 style="background:orange;color:#FFF;padding:15px">Thanks</h2>';
+            $mail = new email;
+            $mail->sendMail($user->email , "Reg" , $body);
+          
+
+
+
+
+            $_SESSION["user_id"]=$user_id;
             header("location: index.php");
             
         }
@@ -120,4 +126,38 @@ if(isset($_POST['login']))
 
 }
 
+if(isset($_POST["forget"])){
+    $email = $_POST["email"];
+    $user = user::whereone("email" , $email);
+    if($user){
+        $code = random_int(100000 , 200000);
+        $user->code = $code;
+        if($user->update()){
+            $mail = new email;
+            $body = "hello " .$user->fname." , <br>";
+            $body .= "Use below Code to reset Your Password :<br><br><br>";
+            $body .= "<span style='padding:14px 17px; margin:0 auto ;background:orange;color:#FFF'>".$code."</span>";
+            if($mail->sendMail($email , "Reset Password" , $body)){
+                $_SESSION["forget_email"] = $email;
+                print_r(json_encode(["msg"=>"done"]));
+            }
+        }
+    }else{
+        print_r(json_encode(["msg"=>"error"]));
+    }
+}
+
+if(isset($_POST["code_btn"])){
+    $code  = $_POST["code"];
+    $email = $_SESSION["forget_email"];
+    $user = user::whereone("email" , $email);
+    if($user){
+        if($user->code == $code){
+            print_r(json_encode(["msg"=>"matched"]));
+        }else{
+            print_r(json_encode(["msg"=>"not"]));
+        }
+    }
+
+}
 

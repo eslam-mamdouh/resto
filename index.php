@@ -3,14 +3,9 @@
     include "classes/".$class.".php";
 });
 
-  session_start();
-<<<<<<< HEAD
-  $user        = user::where("id" , $_SESSION["user_id"]);
-=======
-
-  // echo $_SESSION["signup"];
-  // die();
   
+  session_start();
+
   if(isset($_SESSION['signup']) && $_SESSION['signup']=="done" ){
     $user = user::where("id" , $_SESSION["user_id"]);
   }
@@ -26,7 +21,6 @@
 
   
   
->>>>>>> 244ae2ad4f031479a2eb1ff65f24bd812b6e9119
   $slides      = slide::all();
   $specialties = special::all();
   $menus       = menu::all();  
@@ -504,10 +498,10 @@
             data :$("#reservation").serialize()
           })
           .done(function(res){
-            if(res == "done"){
+             
+            if(res["msg"] == "done"){
               $("#res_create").css("display" , "block");
             }else{
-              // console.log(res.length);
                 for(var i=0 ; i< Object.keys(res).length;i++){
                   console.log(res);
                   $("#"+res[i]).css("display" , "block");

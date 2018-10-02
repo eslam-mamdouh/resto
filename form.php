@@ -101,6 +101,7 @@ session_start();
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                                     <input id="pass" type="password" class="form-control" name="password" placeholder="Enter Your password">
                                 </div>     
+                                <a href="forget.php">Forget Password</a>
                                 <button class="btn btn-info" type="submit" name="login" style="font-size:16px; margin-left:27%;margin-top: 20px;width: 200px;padding: 10px">Sign In</button>
             
                         </form>
@@ -132,7 +133,7 @@ session_start();
                                         <input id="pass" type="password" class="form-control" name="password" placeholder="Enter Your password">
                                 </div>     
                                 <br>
-                                <input type="file" name="image">
+                                <input type="file" name="image" required>
                                 <br>
 
                                 <button class="btn btn-info" name="signup" type="submit" style="font-size:16px; margin-left:27%;width: 200px;padding: 10px">Sign Up</button>

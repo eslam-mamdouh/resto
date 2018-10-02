@@ -178,10 +178,10 @@
         }
     }
     
-    if(isset($_GET["menu_id"])){
+    if(isset($_GET["get_menu_item"])){
 
-        $o = menu::where("id" , $_GET["menu_id"]);
-        print_r(json_encode($o));
+        $item = menu::whereone("id" , $_GET["item_id"]);
+        print_r(json_encode($item));
 
     }   
 

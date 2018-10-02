@@ -5,7 +5,7 @@
         include "../classes/".$class.".php";
     });
     if(isset($_SESSION["user_id"])){
-        $user = user::where("id" , $_SESSION["user_id"]);
+        $user = user::whereone("id" , $_SESSION["user_id"]);
         if($user->role != "admin"){
             header("location: ../index.php");
         }

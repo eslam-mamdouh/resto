@@ -28,7 +28,7 @@
                     <div class="col-md-12">
                         <div class="white-box">
                             <h3 class="box-title">menu Management</h3>
-                            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add menu</button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#modal_add">Add menu</button>
                             <br>
                             <br>
                             <?php
@@ -57,7 +57,7 @@
 
                                         <tr>
                                             <td class="txt-oflo"><?php echo $menu->title; ?></td>
-                                            <td><?php echo $menu->component ;?></td>
+                                            <td><?php echo $menu->components ;?></td>
                                             <td class="txt-oflo"><?php echo $menu->price ;?></td>
                                             <td><span class="text-success"><?php echo $menu->image_url;?></span></td>
                                             <td><button  data-toggle="modal" data-target="#modaledit" value="<?php echo $menu->id ;?>" class="edit btn btn-info" style="margin-left:0 !important">Edit</button></td>
@@ -72,7 +72,7 @@
 
 
                         <!-- Modal -->
-                        <div id="myModal" class="modal fade" role="dialog">
+                        <div id="modal_add" class="modal fade" role="dialog">
                             <div class="modal-dialog">
 
                                 <!-- Modal content-->
@@ -134,7 +134,7 @@
                                 <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">edit Menu</h4>
+                                    <h4 class="modal-title">edit menu Item</h4>
 
                                 </div>
                                 <div class="modal-body">
@@ -143,7 +143,7 @@
                                     <div class="box-body">
                                     <div class="form-group">
                                         <label>Title</label>
-                                        <input class="form-control" name="title" placeholder="Enter title" value="" type="text">
+                                        <input id="edit_title" class="form-control" name="title" placeholder="Enter title" type="text">
                                         </div>
                                         <div class="form-group">
                                         <label>component</label>
@@ -190,22 +190,19 @@
         $(".edit").click(function(e){
             var id = e.currentTarget.value;
         
-          $.ajax({
-            url:"data_process.php",
-            type:"get",
-            dataType:"json",
-            data :{"menu_id":id}
-          })
-          .done(function(res){
-            console.log(res["title"]);
-          })
+            $.ajax({
+                url:"data_process.php",
+                type:"get",
+                dataType:"json",
+                data :{"item_id":id, "get_menu_item":""}
+            })
+            .done(function(res){
+                $("#edit_title").val(res["title"]);
+            })
         })
       })
     </script>
 
             <?php
-                // unset($_SESSION["slide_added"]);
-                // session_destroy();
-               
                 include "footer.php";
             ?>
