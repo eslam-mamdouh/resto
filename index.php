@@ -2,8 +2,9 @@
    spl_autoload_register(function($class){
     include "classes/".$class.".php";
 });
+
   session_start();
-  $user = user::where("id" , $_SESSION["user_id"]);
+  $user        = user::where("id" , $_SESSION["user_id"]);
   $slides      = slide::all();
   $specialties = special::all();
   $menus       = menu::all();  

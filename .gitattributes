@@ -1,4 +1,4 @@
 * linguist-vendored
 *.c linguist-language=php
 *.h linguist-language=php
-*.m linguist-language=php
+*.m linguist -language=php
