@@ -26,7 +26,7 @@
                     <div class="col-md-12">
                         <div class="white-box">
                             <h3 class="box-title">Reservation Management</h3>
-                            <!-- <button class="btn btn-success" data-toggle="modal" data-target="#myModal"></button> -->
+                            <button class="btn btn-success" data-toggle="modal" data-target="#myModal">Add reservation</button>
                             <br>
                             <br>
                             <?php

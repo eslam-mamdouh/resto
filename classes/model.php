@@ -100,8 +100,19 @@ class model extends DB{
         }
         return $res[0];
     }
-
     public static function where($col , $val){
+        $data=[];
+        
+        $a = new static;
+        $sql = "SELECT * FROM `$a->table` WHERE `$col` = '$val'";
+        
+        $data = $a->fetch($sql);
+
+        return $data;
+
+    }
+
+    public static function whereone($col , $val){
         $data=[];
         
         $a = new static;
